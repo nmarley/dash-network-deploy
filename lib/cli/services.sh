@@ -8,9 +8,6 @@ function services_list() {
     # Ensure vpn config
     ansible_download_vpn_config
 
-    # Output services info
-    override_aws_credentials "TERRAFORM" "ANSIBLE"
-
     cd terraform/aws
 
     terraform output services

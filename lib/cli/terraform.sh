@@ -1,8 +1,5 @@
 function terraform_init() {
-    override_aws_credentials "TERRAFORM" "ANSIBLE"
-
     # Get AWS region from AWS profile if not present
-
     if [ -z ${AWS_REGION} ] && [ ! -z ${AWS_PROFILE} ]; then
         AWS_REGION="$(aws configure get region)"
     fi

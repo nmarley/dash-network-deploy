@@ -1,6 +1,4 @@
 function ansible_run_playbook() {
-    override_aws_credentials "ANSIBLE" "TERRAFORM"
-
     cd ansible
 
     # Invoke ansible-playbook
@@ -37,8 +35,6 @@ function ansible_get_ip_by_host() {
 function ansible_download_vpn_config() {
     if [ ! -f "$VPN_CONFIG_PATH" ]; then
         echo "OpenVPN config '$VPN_CONFIG_PATH' not found. Trying to retrieve..."
-
-        override_aws_credentials "ANSIBLE" "TERRAFORM"
 
         cd ansible
 
