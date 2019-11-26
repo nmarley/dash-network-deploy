@@ -20,20 +20,19 @@ Dash Core developers to assist in Dash Evolution development.
 1. [Install Docker](https://docs.docker.com/install/)
 2. Download tool:
 
-    Using `wget`:
+Using `wget`:
 
-    ```bash
-    wget -P /usr/local/bin https://raw.github.com/dashpay/dash-network-deploy/master/bin/dash-network && \
-    chmod +x /usr/local/bin/dash-network
-    ```
+```bash
+wget -P /usr/local/bin https://raw.github.com/dashpay/dash-network-deploy/master/bin/dash-network && \
+chmod +x /usr/local/bin/dash-network
+```
 
-    Using `curl`:
+Using `curl`:
 
-    ```bash
-    curl -fsSL -o /usr/local/bin/dash-network https://raw.github.com/dashpay/dash-network-deploy/master/bin/dash-network && \
-    chmod +x /usr/local/bin/dash-network
-    ```
-
+```bash
+curl -fsSL -o /usr/local/bin/dash-network https://raw.github.com/dashpay/dash-network-deploy/master/bin/dash-network && \
+chmod +x /usr/local/bin/dash-network
+```
 
 ## Configuration
 
@@ -90,17 +89,6 @@ You may pass the `--keep-infrastructure` option to remove only the software and 
 dash-network list <network_name>
 ```
 
-## Testing
-
-To test the network, run the `test` command with with particular network name:
-
-```bash
-dash-network test <network_name>
-```
-
-You may pass the `--type` option to run only particular tests (`smoke`, `e2e`).
-It is possible to specify several types using comma delimiter.
-
 ## Debugging
 
 There are two commands that can be useful for debugging:
@@ -114,9 +102,9 @@ There are two commands that can be useful for debugging:
 
 In order to deploy evolution services use ansible variable:
 
-    ```yaml
-    evo_services: true
-    ```
+```yaml
+evo_services: true
+```
 
 ## Connect to private Dash Network services
 
@@ -126,47 +114,46 @@ You can use the OpenVPN config generated during deployment (`<network_name>.ovpn
 
 1. Clone git repository:
 
-    ```bash
-    git clone https://github.com/dashpay/dash-network-deploy.git
-    ```
+```bash
+git clone https://github.com/dashpay/dash-network-deploy.git
+```
 
 2. Install Ansible and Terraform per instructions provided on the official websites:
 
-    * [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-    * [Terraform](https://www.terraform.io/intro/getting-started/install.html)
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+* [Terraform](https://www.terraform.io/intro/getting-started/install.html)
 
 3. Ensure Python netaddr package is installed locally
 
-    ```bash
-    pip install -U netaddr
-    ```
+```bash
+pip install -U netaddr
+```
 
-    * Note: You may need to run the above command with "pip2" instead of "pip" if
-      your default Python installation is version 3 (e.g. OSX + Homebrew).
+* Note: You may need to run the above command with "pip2" instead of "pip" if
+  your default Python installation is version 3 (e.g. OSX + Homebrew).
 
 4. Install pre-requisite Ansible roles
 
-    ```bash
-    ansible-galaxy install -r ansible/requirements.yml
-    ```
+```bash
+ansible-galaxy install -r ansible/requirements.yml
+```
 
 5. Install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 
-
 6. Install [Node.JS](https://nodejs.org/en/download/) and dependencies:
 
-    ```bash
-    npm install
-    ```
+```bash
+npm install
+```
 
 7. Install OpenVPN:
 
-    On Linux:
-    ```bash
-    apt-get install openvpn
-    ```
+On Linux:
+```bash
+apt-get install openvpn
+```
 
-    On Mac:
-    ```bash
-    brew install openvpn
-    ```
+On Mac:
+```bash
+brew install openvpn
+```
