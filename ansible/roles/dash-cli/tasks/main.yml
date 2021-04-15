@@ -1,7 +1,37 @@
 ---
 
-- name: pull dashd image
-  shell: docker pull {{ dashd_evo_image if evo_services else dashd_image }}
+- name: Set the DashCore image name
+  set_fact:
+    dashcore_image: "{{ dashd_evo_image if evo_services else dashd_image }}"
 
-- name: copy dash-cli from docker container
-  shell: docker run --rm -v /tmp:/host-tmp {{ dashd_evo_image if evo_services else dashd_image }} cp /usr/local/bin/dash-cli /host-tmp/ && mv /tmp/dash-cli /usr/local/bin/dash-cli
+- name: Pull the DashCore image
+  docker_image:
+    name: "{{ dashcore_image }}"
+    source: pull
+    state: present
+    force_source: yes
+
+- name: Create a DashCore container
+  docker_container:
+    name: dashcore  # this should not be "required", but is by Ansible (not Docker)
+    image: "{{ dashcore_image }}"
+    state: present
+    container_default_behavior: compatibility
+
+- name: Copy dash-cli from Docker image to mn host
+  become: yes
+  become_user: root
+  command:
+    cmd: "docker cp dashcore:/usr/local/bin/dash-cli /usr/local/bin/dash-cli"
+    creates: "/usr/local/bin/dash-cli"
+
+- name: Ensure correct permissions on dash-cli
+  file:
+    path: "/usr/local/bin/dash-cli"
+    mode: 0755
+
+- name: Remove the above container now that we copied the binary
+  docker_container:
+    container_default_behavior: no_defaults
+    name: dashcore
+    state: absent
