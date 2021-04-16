@@ -29,7 +29,13 @@
   register: dash_config_state
 
 - name: copy configuration to root user dir to make rpc work
-  shell: cp {{ dashd_home }}/.dashcore/dash.conf /root/.dashcore/
+  copy:
+    src: "{{ dashd_home }}/.dashcore/dash.conf"
+    dest: "/root/.dashcore/dash.conf"
+    owner: '0'
+    group: '0'
+    mode: '0644'
+    remote_src: yes
 
 - name: create dashd container
   docker_container:
