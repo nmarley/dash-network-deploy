@@ -8,15 +8,9 @@
   user:
     name: '{{ dashd_user }}'
     group: '{{ dashd_group }}'
-    append: False
+    append: no
     home: '{{ dashd_home }}'
-
-- name: get uid of dash user
-  shell: id -u {{ dashd_user }}
-  register: dash_user_id
-- name: get gid of dash user
-  shell: id -g {{ dashd_user }}
-  register: dash_group_id
+  register: dashd_user
 
 - name: create dash home/data dir
   file: path={{ dashd_home }} state=directory mode='0750' owner='{{ dashd_user }}' group='{{ dashd_group }}'
@@ -45,7 +39,7 @@
     restart_policy: always
     image: '{{ dashd_evo_image if evo_services else dashd_image }}'
     pull: true
-    user: '{{ dash_user_id.stdout }}:{{ dash_group_id.stdout }}'
+    user: '{{ dashd_user.uid }}:{{ dashd_user.group }}'
     working_dir: '{{ dashd_home }}'
     volumes:
     - '{{ dashd_home }}:/dash'
